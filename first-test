@@ -1,0 +1,42 @@
+def dive_range(div_num , num): 
+    a =  num//div_num 
+    lis = [] 
+    for i in range(div_num*a,div_num*(a + 1)):
+        lis.append(i)
+    return lis
+
+def check_threats_line(place  , board_size , list_name):
+        lis_line = dive_range(board_size , place)
+        for line in lis_line:
+            if list_name[line] == 'Q|':
+                return False
+            else:
+                return True
+def check_threats_column(place  , board_size , list_name):
+    lis_column = []
+    for i in range(0 , board_size**2): 
+        if i % board_size == place % board_size:
+            lis_column.append(i) 
+    for i in lis_column: 
+        if list_name[i] == 'Q|':
+            return False
+        else:
+            return True
+num = int(input('enter the board size: '))
+sum = num**2
+poo = [""] * sum
+for a in range(0 , sum):
+    poo[a] = a
+
+# insert the Qween loop
+n = 1
+while n <= sum:
+    if check_threats_line(n-1 , num , poo) and check_threats_column(n-1 , num , poo):
+        poo[n-1] = 'Q|'
+    n+= 1
+
+for i in range(0 , sum):
+    if (i+1)%num == 0:
+        print(poo[i])
+    else:
+        print(poo[i] , end='     |')
